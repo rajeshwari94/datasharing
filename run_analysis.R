@@ -1,0 +1,48 @@
+
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: i386-w64-mingw32/i386 (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> X_train <- read.table("D:/UCI HAR Dataset/train/X_train.txt")
+> X_train <- read.table("D:/UCI HAR Dataset/train/_train.txt")
+Error in file(file, "rt") : cannot open the connection
+In addition: Warning message:
+  In file(file, "rt") :
+  cannot open file 'D:/UCI HAR Dataset/train/_train.txt': No such file or directory
+> Y_train <- read.table("D:/UCI HAR Dataset/train/Y_train.txt")
+> Sub_train <- read.table("D:/UCI HAR Dataset/train/subject_train.txt")
+> X_test <- read.table("D:/UCI HAR Dataset/test/X_test.txt")
+> Y_test <- read.table("D:/UCI HAR Dataset/test/Y_test.txt")
+> Sub_test <- read.table("D:/UCI HAR Dataset/test/subject_test.txt")
+> variable_names <- read.table(D:/UCI HAR Dataset/features.txt")
+Error: unexpected '/' in "variable_names <- read.table(D:/" 
+> variable_names <- read.table("D:/UCI HAR Dataset/features.txt")
+> activity_labels <- read.table("D:/UCI HAR Dataset/activity_labels.txt")
+> X_total <- rbind(X_train, X_test)
+> Y_total <- rbind(Y_train, Y_test)
+> Sub_total <- rbind(Sub_train, Sub_test)
+> selected_var <- variable_names[grep("mean\\(\\)|std\\(\\)",variable_names[,2]),]
+> X_total <- X_total[,selected_var[,1]]
+> colnames(Y_total) <- "activity"
+> Y_total$activitylabel <- factor(Y_total$activity, labels = as.character(activity_labels[,2]))
+> activitylabel <- Y_total[,-1]
+> colnames(X_total) <- variable_names[selected_var[,1],2]
+> colnames(Sub_total) <- "subject"
+> total <- cbind(X_total, activitylabel, Sub_total)
+> write.table(total, file = "D:/UCI HAR Dataset/tidydata.txt", row.names = FALSE, col.names = TRUE)
